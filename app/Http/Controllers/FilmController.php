@@ -45,16 +45,27 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->image;
-        $file_name = $request->image->getClientOriginalName();
-        $file->move(public_path('images'), $file_name);
+        $request->validate([
+            'judul' => 'required',
+            'tanggal_tayang' => 'required',
+            'waktu_tayang' => 'required',
+            'image' => 'required',
+            'category_id' => 'required',
+        ]);
+
+        // $file = $request->image;
+        // $file_name = $request->image->getClientOriginalName();
+        // $file->move(public_path('images'), $file_name);
+
+        $file_name = $request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('/images', $file_name);
 
         Film::create([
             'id' => Request()->id,
             'judul' => Request()->judul,
             'tanggal_tayang' => Request()->tanggal_tayang,
             'waktu_tayang' => Request()->waktu_tayang,
-            'image' => $file_name,
+            'image' => $path,
             'category_id' => Request()->category_id
         ]);
         return redirect('film')->with('success', 'Berhasil ditambahkan');
@@ -96,15 +107,22 @@ class FilmController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'judul' => 'required',
+            'tanggal_tayang' => 'required',
+            'waktu_tayang' => 'required',
+            'image' => 'required',
+            'category_id' => 'required',
+        ]);
+
         $datafilm = Film::findOrFail($id);
         $datafilm->judul = $request->input('judul');
         $datafilm->tanggal_tayang = $request->input('tanggal_tayang');
         $datafilm->waktu_tayang = $request->input('waktu_tayang');
         if ($request->has('image')) {
-            $file = $request->image;
-            $file_name = $request->image->getClientOriginalName();
-            $file->move(public_path('images'), $file_name);
-            $datafilm->image = $file_name;
+            $file_name = $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storeAs('/images', $file_name);
+            $datafilm->image = $path;
         }
         $datafilm->category_id = $request->input('category_id');
 

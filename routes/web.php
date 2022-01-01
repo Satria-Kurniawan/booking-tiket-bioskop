@@ -50,7 +50,11 @@ Route::group(['middleware' => [
     Route::post('/order', [TransactionController::class, 'store']);
     Route::get('/transaction', [TransactionController::class, 'transaction'])->name('transaksi');
     Route::get('/transaction-detail', [TransactionController::class, 'detail'])->name('detail-transaksi');
+
+    Route::get('/order-tiket/{id}', [TransactionController::class, 'orderTiket'])->name('order-tiket');
+    // Route::get('/tiket', [TransactionController::class, 'tiket'])->name('tiket');
+
+    Route::get('/notification', [TransactionController::class, 'notification']);
 });
 
 Route::get('/', [FrontController::class, 'index'])->name('front');
-Route::get('/order-tiket/{id}', [TransactionController::class, 'orderTiket'])->name('order-tiket');

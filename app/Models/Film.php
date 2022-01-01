@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Film extends Model
 {
@@ -22,5 +23,12 @@ class Film extends Model
     public function transactiondetail()
     {
         return $this->hasMany(TransactionDetail::class);
+    }
+
+    static function getCategory()
+    {
+        $return = DB::table('categories')->join('films', 'categories.id', '=', 'films.category_id');
+
+        return $return;
     }
 }

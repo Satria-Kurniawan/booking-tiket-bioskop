@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -90,12 +92,20 @@ class TransactionController extends Controller
                 'film_id' => Request()->film_id
             ]);
 
+            $response = Http::post('http://localhost:3030/notification', [
+                'req_id' => $invoice,
+                'title' => 'Pemesanan berhasil',
+                'description' => 'Melakukan pembelian ' . Request()->jumlah_tiket . ' tiket dengan id_film ' . Request()->film_id,
+                'user' => Auth::user()->name,
+            ]);
+
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Terdapat kesalahan, data telah di Rollback!');
         }
-        return redirect('/')->with('success', 'Berhasil dipesan');
+
+        return redirect('/',)->with('success', 'Berhasil dipesan');
     }
 
     /**
@@ -148,5 +158,22 @@ class TransactionController extends Controller
         $datafilm = Film::findOrFail($id);
 
         return view('order-tiket', compact('datafilm'));
+    }
+
+    // public function tiket()
+    // {
+    //     $transact = Transaction::with('user')->latest()->take(1)->get();
+    //     $transactdetail = TransactionDetail::with('film', 'transaction')->latest()->take(1)->get();
+
+    //     return view('tiket', compact('transact'), compact('transactdetail'));
+    // }
+
+    public function notification()
+    {
+        $response = Http::get('http://localhost:3030/notification');
+        $collection = $response->collect();
+        $filtered = $collection->whereIn('user', [Auth::user()->name])->reverse();
+
+        return view('notification', ['filtered' => $filtered]);
     }
 }

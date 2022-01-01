@@ -14,7 +14,7 @@
                     <div class="card-body p-0 mt-2">
                         <a href="konten-film/{{ $item->id }}" class="text-dark">
                             @if (!empty($item->image))
-                            <img src="{{ asset('images/' . $item->image) }}" class="img-fluid w-75 h-100">
+                            <img src="{{ asset($item->image) }}" class="img-fluid w-75 h-100">
                             @else
                             No image available
                             @endif

@@ -35,7 +35,7 @@
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <img src="{{ asset('images/' . $datafilm->image) }}" class="img-fluid w-75 h-100">
+                                            <img src="{{ asset($datafilm->image) }}" class="img-fluid w-75 h-100">
                                         </div>
                                     </div>
                                     
