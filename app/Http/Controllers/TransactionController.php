@@ -176,4 +176,14 @@ class TransactionController extends Controller
 
         return view('notification', ['filtered' => $filtered]);
     }
+
+    public function deleteNotification($id)
+    {
+        $response = Http::delete('http://localhost:3030/notification/' . $id);
+
+        $collection = $response->collect();
+        $filtered = $collection->whereIn('user', [Auth::user()->name])->reverse();
+
+        return redirect()->back()->with(compact('filtered'));
+    }
 }

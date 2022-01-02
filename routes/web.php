@@ -54,7 +54,8 @@ Route::group(['middleware' => [
     Route::get('/order-tiket/{id}', [TransactionController::class, 'orderTiket'])->name('order-tiket');
     // Route::get('/tiket', [TransactionController::class, 'tiket'])->name('tiket');
 
-    Route::get('/notification', [TransactionController::class, 'notification']);
+    Route::get('/notification', [TransactionController::class, 'notification'])->name('notifikasi');
+    Route::get('/delete-notification/{id}', [TransactionController::class, 'deleteNotification'])->name('delete-notifikasi');
 });
 
 Route::get('/', [FrontController::class, 'index'])->name('front');

@@ -1,7 +1,10 @@
 @extends('layouts.frontapp')
 
+@section('title', 'Pemesanan')
+
 @section('content')
-    <div class="container">
+    <div class="container mt-3">
+        <h3 class="text-center border-bottom">Pemesanan Tiket</h3>
         <div class="row justify-content-center">
             <div class="col-8">
                 <div class="card rounded-0">
@@ -38,14 +41,17 @@
                                             <img src="{{ asset($datafilm->image) }}" class="img-fluid w-75 h-100">
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>    
-                            <div class="mb-3">
-                                <label for="jumlah_tiket" class="form-label">Jumlah Tiket :</label>
-                                <input type="number" class="form-control" id="jumlah_tiket" name="jumlah_tiket">
-                            </div>
-                            <button type="submit" class="btn btn-success">Order Ticket</button>
+                            <div class="row col-6">
+                                <div class="col-5">
+                                    <label for="jumlah_tiket" class="form-label">Jumlah Tiket :</label>
+                                    <input type="number" class="form-control" id="jumlah_tiket" name="jumlah_tiket">
+                                </div>
+                                <div class="col-7">
+                                    <button type="submit" class="btn btn-success" style="margin-top: 32px">Order Ticket</button>                           
+                                </div>
+                            </div>                       
                         </form>
                     </div>
                 </div>

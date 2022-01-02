@@ -7,7 +7,7 @@
         @foreach ($datafilm as $item)
         <div class="col-3">
             <form class="form" action="order-tiket/{{ $item->id }}">
-                <div class="card-transparent text-center">
+                <div class="card-transparent text-center mt-3">
                     <div class="card-header p-0">
                         <h5>{{ $item->judul }}</h5>
                     </div>

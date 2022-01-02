@@ -21,7 +21,7 @@ class FilmController extends Controller
 
     public function index()
     {
-        $datafilm = Film::with('category')->get();
+        $datafilm = Film::with('category')->latest()->get();
         $ct = Category::all();
 
         return view('film', compact('datafilm'), compact('ct'));

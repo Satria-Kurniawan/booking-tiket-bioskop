@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Welcome</title>
+    <title>@yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -14,13 +14,27 @@
     <link rel="stylesheet" href="{{ asset('AdminLTE-3.1.0/') }}/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('AdminLTE-3.1.0/') }}/dist/css/adminlte.min.css">
-
+    
     {{-- Untuk Toastr --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     
+    {{-- Bootstrap JS --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+        .fa-bell{
+            color: greenyellow
+        }
+        .fa-bell:hover{
+            color: rgb(107, 179, 0)
+        }
+    </style>
+
 </head>
 
 <body>
@@ -28,7 +42,7 @@
         <!-- Links -->
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="{{ url('/') }}">Beranda</a>
             </li>
 
             <!-- Dropdown -->
@@ -43,26 +57,38 @@
                 </div>
             </li>
             <li>
-                <form class="form-inline" action="/action_page.php">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-success" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </li>
         </ul>
         <div class="ml-auto">
-            @if (Route::has('login'))
-            <div class="hidden fixed">
-                @auth
-                <a href="{{ url('/dashboard') }}" class="text-black">Manage</a>
-                @else
-                <a href="{{ route('login') }}" class="text-black">Log in</a>
-
-                @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="text-black">Register</a>
-                @endif
-                @endauth
-            </div>
-            @endif
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('notifikasi') }}"><i class="fas fa-bell"></i></a>
+                </li>
+                <li class="nav-item">
+                    @if (Route::has('login'))
+                        <div class="hidden fixed">
+                            @auth
+                            <li class="nav-item">
+                                <a href="{{ url('/dashboard') }}" class="nav-link">Manage</a>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="nav-link">Log in</a>
+                            </li>
+                            @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="nav-link">Register</a>
+                            </li>
+                            @endif
+                            @endauth
+                        </div>
+                    @endif
+                </li>
+            <ul>
         </div>
     </nav>
 
